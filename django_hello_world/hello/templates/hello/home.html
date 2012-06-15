@@ -1,8 +1,24 @@
 {% extends "base.html" %}
-
+{% block title %}Info page{% endblock %}
 {% block content %}
-<h3>Hello! This is a Django Hello World Project.</h3>
+<h1>42 Coffee Cups Test Assignment</h1>
+<div class="row">
+    <div class="span6">
+        <dl>
+            <dt>Name</dt><dd>{{ owner.firstname }}</dd>
+            <dt>Last name</dt><dd>{{ owner.lastname }}</dd>
+            <dt>Date of birth</dt><dd>{{ owner.birthday }}</dd>
+            <dt>Bio</dt><dd>{{ owner.bio }}</dd>
+        </dl>
+    </div>
+    <div class="span6">
+        <dl>
+            <dt>Email</dt><dd>{{ owner.email }}</dd>
+            <dt>Jabber</dt><dd>{{ owner.jabber }}</dd>
+            <dt>Skype</dt><dd>{{ owner.skype }}</dd>
+            <dt>Other contacts:</dt><dd>{{ owner.other }}</dd>
+        </dl>
 
-<p>You can now go to <a href="{% url admin:index %}">admin interface</a> and change admin pasword</p>
-<p>Currently next users are registered: {% for user in users %}{{ user.username }} {% endfor %}</p>
+    </div>
+</div>
 {% endblock content %}
