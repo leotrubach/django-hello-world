@@ -10,7 +10,6 @@ from django.test import TestCase
 from django.test.client import Client
 
 class HttpTest(TestCase):
-    fixtures = ['owner.json']
     def test_home(self):
         c = Client()
         response = c.get(reverse('home'))
