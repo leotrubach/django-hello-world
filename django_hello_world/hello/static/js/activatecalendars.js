@@ -1,1 +1,1 @@
-$(function() {$('.calendar').datepicker()});
+$(function() {$('.calendar').datepicker({ dateFormat: "yy-mm-dd" })});
