@@ -54,3 +54,8 @@ class HttpTest(TestCase):
 
     def test_calendar(self):
         from django_hello_world.hello.widgets import CalendarWidget
+
+    def test_admintag(self):
+        from django_hello_world.hello.templatetags.admintags import edit_link
+        o = Owner.objects.get(active=True)
+        self.assertEqual(edit_link(o), '/admin/hello/owner/%s/' % o.id)
