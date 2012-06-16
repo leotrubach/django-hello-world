@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Info page{% endblock %}
+{% block form_media %}{{ form.media }}{% endblock %}
 {% block content %}
 <h1>42 Coffee Cups Test Assignment</h1>
-<form enctype="multipart/form-data" method="post">
+<form enctype="multipart/form-data" method="post" id="ownerform" action="post">
     {% csrf_token %}
     <div class="row">
         <div class="span6">
@@ -26,5 +27,22 @@
     </div>
 
     <input type="submit" value="Save"/>
+    <span id="status"></span>
 </form>
+
+<script type="text/javascript">
+    function busy_form() {
+        $('#status').text('Processing...');
+        $('#ownerform').find('input, textarea').attr('disabled', 'disabled');
+    }
+
+    function data_sent() {
+        $('#status').text('Done');
+        $('#ownerform').find('input, textarea').removeAttr('disabled');
+    }
+
+    $(function(){
+        $('#ownerform').ajaxForm({success: data_sent, beforeSubmit: busy_form});
+    });
+</script>
 {% endblock content %}

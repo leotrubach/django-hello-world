@@ -4,6 +4,7 @@ from django.views.generic import UpdateView
 from django import forms
 
 from .models import Owner, Request
+from .widgets import CalendarWidget
 
 @render_to('hello/home.html')
 def home(request):
@@ -20,6 +21,10 @@ class OwnerForm(forms.ModelForm):
     class Meta:
         model = Owner
         exclude = ('active')
+        widgets = {'birthday': CalendarWidget()}
+
+    class Media:
+        js = ('js/jquery.form.js',)
 
 
 class EditOwner(UpdateView):
