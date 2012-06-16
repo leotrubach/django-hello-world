@@ -25,7 +25,7 @@ class HttpTest(TestCase):
         self.assertContains(response, 'Other contacts')
 
     def test_reqmid(self):
-        self.assertIn('hello.middleware.StoreRequestMiddleware', MIDDLEWARE_CLASSES)
+        self.assertIn('django_hello_world.hello.middleware.StoreRequestMiddleware', MIDDLEWARE_CLASSES)
         c = Client()
         response = c.get(reverse('home'))
         self.assertContains(response, 'Requests')
