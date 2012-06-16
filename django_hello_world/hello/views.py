@@ -23,6 +23,9 @@ class OwnerForm(forms.ModelForm):
         exclude = ('active')
         widgets = {'birthday': CalendarWidget()}
 
+    class Media:
+        js = ('js/jquery.form.js',)
+
 
 class EditOwner(UpdateView):
     model = Owner
