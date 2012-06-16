@@ -8,6 +8,7 @@ Replace this with more appropriate tests for your application.
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
+from .models import Owner
 
 class HttpTest(TestCase):
     def test_home(self):
@@ -36,3 +37,16 @@ class HttpTest(TestCase):
         c = Client()
         response = c.get(reverse('home'))
         self.assertIn('settings', response.context)
+
+    def test_owner_photo(self):
+        self.assert_(hasattr(Owner, 'photo'))
+        c = Client()
+        response = c.get(reverse('home'))
+        self.assertContains(response, 'Login')
+        # Login and check if there is 'Edit' link and logout link
+        c.post('/login/', {'username': 'admin', 'password': 'admin'})
+        response = c.get(reverse('home'))
+        self.assertContains(response, 'Logout')
+        self.assertContains(response, 'Edit')
+        response = c.get(reverse('edit'))
+        self.assertIn('form', response.context)
