@@ -48,5 +48,6 @@ class HttpTest(TestCase):
         response = c.get(reverse('home'))
         self.assertContains(response, 'Logout')
         self.assertContains(response, 'Edit')
-        response = c.get(reverse('edit'))
+        pk = Owner.objects.get(active=True).id
+        response = c.get(reverse('edit_owner', kwargs={'pk': pk}))
         self.assertIn('form', response.context)

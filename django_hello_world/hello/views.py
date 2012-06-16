@@ -1,5 +1,7 @@
 from annoying.decorators import render_to
 from django.contrib.auth.models import User
+from django.views.generic import UpdateView
+from django import forms
 
 from .models import Owner, Request
 
@@ -13,3 +15,14 @@ def home(request):
         owner = None
     last_requests = Request.objects.order_by('-dt_request')[:10]
     return {'owner': owner, 'last_requests': last_requests}
+
+class OwnerForm(forms.ModelForm):
+    class Meta:
+        model = Owner
+        exclude = ('active')
+
+
+class EditOwner(UpdateView):
+    model = Owner
+    form_class = OwnerForm
+    success_url = '/'

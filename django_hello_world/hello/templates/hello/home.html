@@ -2,6 +2,9 @@
 {% block title %}Info page{% endblock %}
 {% block content %}
 <h1>42 Coffee Cups Test Assignment</h1>
+{% if perms.hello.change_owner %}
+    <a href="{% url edit_owner pk=owner.id %}">Edit</a>
+{% endif %}
 {% if owner %}
     <div class="row">
         <div class="span6">
