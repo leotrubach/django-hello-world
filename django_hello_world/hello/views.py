@@ -5,5 +5,10 @@ from .models import Owner
 
 @render_to('hello/home.html')
 def home(request):
-    owner = Owner.objects.get(active=True)
+    try:
+        owner = Owner.objects.get(active=True)
+    except Owner.DoesNotExist:
+        owner = None
+    except Owner.MultipleObjectsReturned:
+        owner = None
     return {'owner': owner}
