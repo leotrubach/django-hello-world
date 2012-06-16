@@ -51,3 +51,6 @@ class HttpTest(TestCase):
         pk = Owner.objects.get(active=True).id
         response = c.get(reverse('edit_owner', kwargs={'pk': pk}))
         self.assertIn('form', response.context)
+
+    def test_calendar(self):
+        from django_hello_world.hello.widgets import CalendarWidget
