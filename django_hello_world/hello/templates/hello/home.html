@@ -2,23 +2,25 @@
 {% block title %}Info page{% endblock %}
 {% block content %}
 <h1>42 Coffee Cups Test Assignment</h1>
-<div class="row">
-    <div class="span6">
-        <dl>
-            <dt>Name</dt><dd>{{ owner.firstname }}</dd>
-            <dt>Last name</dt><dd>{{ owner.lastname }}</dd>
-            <dt>Date of birth</dt><dd>{{ owner.birthday }}</dd>
-            <dt>Bio</dt><dd>{{ owner.bio }}</dd>
-        </dl>
-    </div>
-    <div class="span6">
-        <dl>
-            <dt>Email</dt><dd>{{ owner.email }}</dd>
-            <dt>Jabber</dt><dd>{{ owner.jabber }}</dd>
-            <dt>Skype</dt><dd>{{ owner.skype }}</dd>
-            <dt>Other contacts:</dt><dd>{{ owner.other }}</dd>
-        </dl>
+{% if owner %}
+    <div class="row">
+        <div class="span6">
+            <dl>
+                <dt>Name</dt><dd>{{ owner.firstname }}</dd>
+                <dt>Last name</dt><dd>{{ owner.lastname }}</dd>
+                <dt>Date of birth</dt><dd>{{ owner.birthday }}</dd>
+                <dt>Bio</dt><dd>{{ owner.bio }}</dd>
+            </dl>
+        </div>
+        <div class="span6">
+            <dl>
+                <dt>Email</dt><dd>{{ owner.email }}</dd>
+                <dt>Jabber</dt><dd>{{ owner.jabber }}</dd>
+                <dt>Skype</dt><dd>{{ owner.skype }}</dd>
+                <dt>Other contacts:</dt><dd>{{ owner.other }}</dd>
+            </dl>
 
+        </div>
     </div>
-</div>
+{% endif %}
 {% endblock content %}
