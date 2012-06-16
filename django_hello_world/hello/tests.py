@@ -39,7 +39,7 @@ class HttpTest(TestCase):
         self.assertIn('settings', response.context)
 
     def test_owner_photo(self):
-        self.assert_(hasattr(Owner, 'photo'))
+        self.assertIn('photo', [f.name for f in Owner._meta.fields])
         c = Client()
         response = c.get(reverse('home'))
         self.assertContains(response, 'Login')
