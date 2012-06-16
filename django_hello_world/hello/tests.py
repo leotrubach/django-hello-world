@@ -54,3 +54,6 @@ class HttpTest(TestCase):
 
     def test_calendar(self):
         from django_hello_world.hello.widgets import CalendarWidget
+
+    def test_admintag(self):
+        from django_hellow_world.hello.tags import admintag
