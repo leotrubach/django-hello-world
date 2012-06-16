@@ -9,6 +9,8 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
 
+from django_hello_world.settings import MIDDLEWARE_CLASSES
+
 class HttpTest(TestCase):
     def test_home(self):
         c = Client()
@@ -21,3 +23,10 @@ class HttpTest(TestCase):
         self.assertContains(response, 'Jabber')
         self.assertContains(response, 'Skype')
         self.assertContains(response, 'Other contacts')
+
+    def test_reqmid(self):
+        self.assertIn('hello.middleware.StoreRequestMiddleware', MIDDLEWARE_CLASSES)
+        c = Client()
+        response = c.get(reverse('home'))
+        self.assertContains(response, 'Requests')
+        self.assertIn('last_requests', response.context)
