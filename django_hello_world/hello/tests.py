@@ -33,7 +33,7 @@ class HttpTest(TestCase):
 
     def test_context_processors(self):
         TEMPLATE_CONTEXT_PROCESSORS = settings.TEMPLATE_CONTEXT_PROCESSORS
-        self.asserIn('django_hello_world.hello.context_processors.settings', TEMPLATE_CONTEXT_PROCESSORS)
+        self.assertIn('django_hello_world.hello.context_processors.settings', TEMPLATE_CONTEXT_PROCESSORS)
         c = Client()
         response = c.get(reverse('home'))
         self.assertIn('settings', response.context)
