@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Info page{% endblock %}
+{% block content %}
+<h1>42 Coffee Cups Test Assignment</h1>
+<form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="span6">
+            <dl>
+                <dt>Name</dt><dd>{{ form.firstname }}</dd>
+                <dt>Last name</dt><dd>{{ form.lastname }}</dd>
+                <dt>Date of birth</dt><dd>{{ form.birthday }}</dd>
+                <dt>Photo </dt><dd>{{ form.photo }}</dd>
+            </dl>
+        </div>
+        <div class="span6">
+            <dl>
+                <dt>Email</dt><dd>{{ form.email }}</dd>
+                <dt>Jabber</dt><dd>{{ form.jabber }}</dd>
+                <dt>Skype</dt><dd>{{ form.skype }}</dd>
+                <dt>Other contacts:</dt><dd>{{ form.other }}</dd>
+                <dt>Bio</dt><dd>{{ form.bio }}</dd>
+
+            </dl>
+        </div>
+    </div>
+
+    <input type="submit" value="Save"/>
+</form>
+{% endblock content %}
