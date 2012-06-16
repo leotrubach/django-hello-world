@@ -9,7 +9,7 @@
                 <dt>Name</dt><dd>{{ owner.firstname }}</dd>
                 <dt>Last name</dt><dd>{{ owner.lastname }}</dd>
                 <dt>Date of birth</dt><dd>{{ owner.birthday }}</dd>
-                <dt>Bio</dt><dd>{{ owner.bio }}</dd>
+                <dt>Photo </dt><dd><img src="{{ MEDIA_URL }}{{ owner.photo }}" alt="photo"/></dd>
             </dl>
         </div>
         <div class="span6">
@@ -18,6 +18,7 @@
                 <dt>Jabber</dt><dd>{{ owner.jabber }}</dd>
                 <dt>Skype</dt><dd>{{ owner.skype }}</dd>
                 <dt>Other contacts:</dt><dd>{{ owner.other }}</dd>
+                <dt>Bio</dt><dd>{{ owner.bio }}</dd>
             </dl>
 
         </div>
