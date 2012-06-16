@@ -56,4 +56,4 @@ class HttpTest(TestCase):
         from django_hello_world.hello.widgets import CalendarWidget
 
     def test_admintag(self):
-        from django_hello_world.hello.tags import admintag
+        from django_hello_world.hello.templatetags.admintags import edit_link
