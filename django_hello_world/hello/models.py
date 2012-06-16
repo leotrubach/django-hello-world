@@ -9,6 +9,7 @@ class Owner(models.Model):
     jabber = models.CharField(max_length=25, verbose_name='jabber')
     skype = models.CharField(max_length=25, verbose_name='skype')
     other = models.TextField(verbose_name='other information')
+    photo = models.ImageField(upload_to='photos', verbose_name='photo', null=True, blank=True)
     active = models.BooleanField(verbose_name='active')
 
     def __unicode__(self):
