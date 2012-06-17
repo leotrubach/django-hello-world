@@ -1,8 +1,11 @@
+import random
+
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
 from .models import Owner
 from django_hello_world.settings import MIDDLEWARE_CLASSES
+from django.forms.models import model_to_dict
 
 
 class HttpTest(TestCase):
@@ -45,7 +48,16 @@ class HttpTest(TestCase):
         self.assertContains(response, 'Edit')
         pk = Owner.objects.get(active=True).id
         response = c.get(reverse('edit_owner', kwargs={'pk': pk}))
-        self.assertIn('form', response.context)
+        d = model_to_dict(response.context['form'].instance)
+        alphabet = 'abcdefghijklmnopqrstuvwxyz'
+        randomname = ''.join([random.choice(alphabet) for i in range(8)])
+        d['firstname'] = randomname
+        del d['active']
+        d['photo-clear'] = False
+        d['photo'] = None
+        c.post(reverse('edit_owner', kwargs={'pk': pk}), d)
+        response = c.get(reverse('home'))
+        self.assertContains(response, randomname)
 
     def test_calendar(self):
         from django_hello_world.hello.widgets import CalendarWidget
@@ -54,3 +66,4 @@ class HttpTest(TestCase):
         from django_hello_world.hello.templatetags.admintags import edit_link
         o = Owner.objects.get(active=True)
         self.assertEqual(edit_link(o), '/admin/hello/owner/%s/' % o.id)
+=

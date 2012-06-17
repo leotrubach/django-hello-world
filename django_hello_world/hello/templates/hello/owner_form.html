@@ -2,32 +2,56 @@
 {% block title %}Info page{% endblock %}
 {% block form_media %}{{ form.media }}{% endblock %}
 {% block content %}
-<h1>42 Coffee Cups Test Assignment</h1>
-<form enctype="multipart/form-data" method="post" id="ownerform" action="">
+<form class="form-horizontal" enctype="multipart/form-data" method="post">
+    <fieldset>
     {% csrf_token %}
     <div class="row">
         <div class="span6">
-            <dl>
-                <dt>Name</dt><dd>{{ form.firstname }}</dd>
-                <dt>Last name</dt><dd>{{ form.lastname }}</dd>
-                <dt>Date of birth</dt><dd>{{ form.birthday }}</dd>
-                <dt>Photo </dt><dd>{{ form.photo }}</dd>
-            </dl>
+            <div class="control-group">
+                <label class="control-label">{{ form.firstname.label }}:</label>
+                <div class="controls">{{ form.firstname }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{{ form.lastname.label }}:</label>
+                <div class="controls">{{ form.lastname }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{{ form.birthday.label }}:</label>
+                <div class="controls">{{ form.birthday }}</div>
+            </div>
+            <div class="control-group">
+                <label>{{ form.photo.label }}:</label>
+                {{ form.photo }}
+            </div>
         </div>
         <div class="span6">
-            <dl>
-                <dt>Email</dt><dd>{{ form.email }}</dd>
-                <dt>Jabber</dt><dd>{{ form.jabber }}</dd>
-                <dt>Skype</dt><dd>{{ form.skype }}</dd>
-                <dt>Other contacts:</dt><dd>{{ form.other }}</dd>
-                <dt>Bio</dt><dd>{{ form.bio }}</dd>
-
-            </dl>
+            <div class="control-group">
+                <label class="control-label">{{ form.email.label }}:</label>
+                <div class="controls">{{ form.email }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{{ form.jabber.label }}:</label>
+                <div class="controls">{{ form.jabber }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{{ form.skype.label }}:</label>
+                <div class="controls">{{ form.skype }}</div>
+            </div>
+            <div class="control-group">
+                <label>{{ form.other.label }}:</label>
+                {{ form.other }}
+            </div>
+            <div class="control-group">
+                <label>{{ form.bio.label }}:</label>
+                {{ form.bio }}
+            </div>
         </div>
     </div>
-
-    <input type="submit" value="Save"/>
-    <span id="status"></span>
+    <div class="form-actions">
+        <input type="submit" class="btn btn-primary" value="Save"/>
+        <a href="{% url home %}" class="btn">Cancel</a>
+    </div>
+    </fieldset>
 </form>
 
 <script type="text/javascript">
