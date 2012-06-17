@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import Owner
-from .widgets import ClearableImageInput
+from .widgets import ClearableImageInput, CalendarWidget
 
 
 class OwnerForm(forms.ModelForm):
@@ -13,4 +13,8 @@ class OwnerForm(forms.ModelForm):
     class Meta:
         model = Owner
         exclude = ('active')
-        widgets = {'photo': ClearableImageInput()}
+        widgets = {'photo': ClearableImageInput(),
+                   'birthday': CalendarWidget()}
+
+    class Media:
+        js = ('js/jquery.form.js', 'js/ajaxify_owner_form.js')
