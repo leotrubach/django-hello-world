@@ -46,8 +46,10 @@
             </div>
         </div>
     </div>
-
-    <input type="submit" value="Save"/>
+    <div class="form-actions">
+        <input type="submit" class="btn btn-primary" value="Save"/>
+        <a href="{% url home %}" class="btn">Cancel</a>
+    </div>
     </fieldset>
 </form>
 {% endblock content %}
