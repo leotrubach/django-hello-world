@@ -1,5 +1,6 @@
 from os.path import abspath, dirname
 
+
 def get_project_path():
     return dirname(abspath(__file__))
 

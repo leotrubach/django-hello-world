@@ -1,6 +1,5 @@
 from annoying.decorators import render_to
 from django.contrib.auth.models import User
-
 from .models import Owner, Request
 
 
@@ -13,6 +12,7 @@ def home(request):
     except Owner.MultipleObjectsReturned:
         owner = None
     return {'owner': owner}
+
 
 @render_to('hello/last_requests.html')
 def last_ten_requests(request):
