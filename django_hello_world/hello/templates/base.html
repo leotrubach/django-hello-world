@@ -9,12 +9,20 @@
     {% block form_media %}{% endblock %}
 </head>
 <body>
+<div class="container">
 {% block header %}
+    <div class="row">
+    <div class="auth pull-right">
     {% if user.is_authenticated %}
-        <p>{{ user.username }} <a href="{% url logout %}?next={% url home %}">Logout</a></p>
+        {{ user.username }} <a class="btn" href="{% url logout %}?next={% url home %}">Logout</a>
     {% else %}
-        <p><a href="{% url login %}">Login</a></p>
+        <a class="btn" href="{% url login %}">Login</a>
     {% endif %}
+    </div>
+    <h1>42 Coffee Cups Test Assignment</h1>
+    </div>
 {% endblock %}
-{% block body %}{% block content %}{% endblock content %}{% endblock body %}</body>
+{% block body %}{% block content %}{% endblock content %}{% endblock body %}
+</div>
+</body>
 </html>

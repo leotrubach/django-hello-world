@@ -1,5 +1,6 @@
 from .models import Request
 
+
 class StoreRequestMiddleware:
     def process_request(self, request):
         r = Request()

@@ -6,17 +6,17 @@ from django_hello_world.hello.views import EditOwner
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+
+
 admin.autodiscover()
 
-urlpatterns = patterns('',
-    # Examples:
+urlpatterns = patterns(
+    '',
     url(r'^$', 'django_hello_world.hello.views.home', name='home'),
-    # url(r'^django_hello_world/', include('django_hello_world.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
+    url(r'^last_requests$',
+        'django_hello_world.hello.views.last_ten_requests',
+        name='last_requests'),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/$', 'django.contrib.auth.views.login', name='login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', name='logout'),
@@ -24,7 +24,8 @@ urlpatterns = patterns('',
 )
 
 if settings.DEBUG:
-    urlpatterns += patterns('',
+    urlpatterns += patterns(
+        '',
         url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
             'document_root': settings.MEDIA_ROOT,
         }),
