@@ -6,6 +6,7 @@ from django import forms
 from .models import Owner, Request
 from .widgets import CalendarWidget
 
+
 @render_to('hello/home.html')
 def home(request):
     try:
