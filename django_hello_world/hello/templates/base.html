@@ -5,5 +5,21 @@
     <title>{% block title %}No title{% endblock %}</title>
 
 </head>
-<body>{% block body %}{% block content %}{% endblock content %}{% endblock body %}</body>
+<body>
+<div class="container">
+{% block header %}
+    <div class="row">
+    <div class="auth pull-right">
+    {% if user.is_authenticated %}
+        {{ user.username }} <a class="btn" href="{% url logout %}?next={% url home %}">Logout</a>
+    {% else %}
+        <a class="btn" href="{% url login %}">Login</a>
+    {% endif %}
+    </div>
+    <h1>42 Coffee Cups Test Assignment</h1>
+    </div>
+{% endblock %}
+{% block body %}{% block content %}{% endblock content %}{% endblock body %}
+</div>
+</body>
 </html>
