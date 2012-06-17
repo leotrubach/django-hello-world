@@ -89,16 +89,18 @@ class HttpTest(TestCase):
             model_name, count = (c.strip() for c in s.split(':'))
             return model_name, int(count)
 
-
         def run_and_parse_output():
             command_output = StringIO()
             error_output = StringIO()
             call_command('modelcount', stdout=command_output, stderr=error_output)
-            std_list = [line for line in command_output]
-            err_list = [line for line in error_output]
+            command_output.seek(0)
+            error_output.seek(0)
+            std_list = command_output.readlines()
+            err_list = error_output.readlines()
+
             self.assertEqual(len(std_list), len(err_list))
             for i in range(len(std_list)):
-                self.assertEqual('Error: ' + std_list[i], err_list[i])
+                self.assertEqual('error: ' + std_list[i], err_list[i])
             return dict([parse_line(s) for s in std_list])
 
         c = Client()
