@@ -17,4 +17,4 @@ class OwnerForm(forms.ModelForm):
                    'birthday': CalendarWidget()}
 
     class Media:
-        js = ('js/jquery.form.js',)
+        js = ('js/jquery.form.js', 'js/ajaxify_owner_form.js')
