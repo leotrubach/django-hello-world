@@ -3,7 +3,7 @@ import random
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
-from .models import Owner
+from .models import Owner, Request
 from django_hello_world.settings import MIDDLEWARE_CLASSES
 from django.forms.models import model_to_dict
 
@@ -29,6 +29,14 @@ class HttpTest(TestCase):
         response = c.get(reverse('last_requests'))
         self.assertContains(response, 'Requests')
         self.assertIn('last_requests', response.context)
+        c.get(reverse('home'))
+        request = Request.objects.order_by('-logged_date')[0]
+        self.assertEqual(request.path, reverse('home'))
+        self.assertEqual(request.method, 'GET')
+        c.post(reverse('last_requests'))
+        request = Request.objects.order_by('-logged_date')[0]
+        self.assertEqual(request.path, reverse('last_requests'))
+        self.assertEqual(request.method, 'POST')
 
     def test_context_processors(self):
         from django.conf import settings
