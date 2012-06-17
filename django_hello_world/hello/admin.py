@@ -5,6 +5,7 @@ from .models import Owner, Request
 class OwnerAdmin(admin.ModelAdmin):
     pass
 
+
 class RequestAdmin(admin.ModelAdmin):
     pass
 
