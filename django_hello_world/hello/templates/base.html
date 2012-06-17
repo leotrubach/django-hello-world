@@ -14,7 +14,7 @@
     <div class="row">
     <div class="auth pull-right">
     {% if user.is_authenticated %}
-        {{ user.username }} <a class="btn" href="{% url logout %}?next={% url home %}">Logout</a>
+        <a href="{% edit_link user %}">{{ user.username }}</a> <a class="btn" href="{% url logout %}?next={% url home %}">Logout</a>
     {% else %}
         <a class="btn" href="{% url login %}">Login</a>
     {% endif %}
