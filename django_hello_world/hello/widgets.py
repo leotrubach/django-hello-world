@@ -4,11 +4,10 @@ from django.utils.html import escape, conditional_escape
 from django.utils.encoding import force_unicode
 
 class ClearableImageInput(FileInput):
-    initial_text = ''
     input_text = 'Change'
     clear_checkbox_label = 'Clear'
 
-    template_with_initial = u'%(initial_text)s: %(initial)s %(clear_template)s<br />%(input_text)s: %(input)s'
+    template_with_initial = u'%(initial)s %(clear_template)s<br />%(input_text)s: %(input)s'
 
     template_with_clear = u'<label for="%(clear_checkbox_id)s" class="checkbox">%(clear)s %(clear_checkbox_label)s</label>'
 
@@ -27,7 +26,6 @@ class ClearableImageInput(FileInput):
 
     def render(self, name, value, attrs=None):
         substitutions = {
-            'initial_text': self.initial_text,
             'input_text': self.input_text,
             'clear_template': '',
             'clear_checkbox_label': self.clear_checkbox_label,
