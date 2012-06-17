@@ -1,13 +1,8 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
-"""
-
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
+from django_hello_world.settings import MIDDLEWARE_CLASSES
+
 
 class HttpTest(TestCase):
     def test_home(self):
@@ -22,11 +17,12 @@ class HttpTest(TestCase):
         self.assertContains(response, 'Skype')
         self.assertContains(response, 'Other contacts')
 
-    def test_reqmid(self):
-        from django_hello_world.settings import MIDDLEWARE_CLASSES
-        self.assertIn('django_hello_world.hello.middleware.StoreRequestMiddleware', MIDDLEWARE_CLASSES)
+    def test_request_middleware(self):
+        self.assertIn(
+            'django_hello_world.hello.middleware.StoreRequestMiddleware',
+            MIDDLEWARE_CLASSES)
         c = Client()
-        response = c.get(reverse('home'))
+        response = c.get(reverse('last_requests'))
         self.assertContains(response, 'Requests')
         self.assertIn('last_requests', response.context)
 
