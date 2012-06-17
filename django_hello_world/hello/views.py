@@ -1,10 +1,10 @@
 from annoying.decorators import render_to
 from django.contrib.auth.models import User
 from django.views.generic import UpdateView
-from django import forms
 
 from .models import Owner, Request
-from .widgets import CalendarWidget
+from .forms import OwnerForm
+
 
 @render_to('hello/home.html')
 def home(request):
@@ -14,17 +14,13 @@ def home(request):
         owner = None
     except Owner.MultipleObjectsReturned:
         owner = None
+    return {'owner': owner}
+
+
+@render_to('hello/last_requests.html')
+def last_ten_requests(request):
     last_requests = Request.objects.order_by('-dt_request')[:10]
-    return {'owner': owner, 'last_requests': last_requests}
-
-class OwnerForm(forms.ModelForm):
-    class Meta:
-        model = Owner
-        exclude = ('active')
-        widgets = {'birthday': CalendarWidget()}
-
-    class Media:
-        js = ('js/jquery.form.js',)
+    return {'last_requests': last_requests}
 
 
 class EditOwner(UpdateView):

@@ -2,3 +2,5 @@
 *.sqlite3
 .env
 .idea
+django-hello-world/collected_static/*
+django-hello-world/stored_media/*

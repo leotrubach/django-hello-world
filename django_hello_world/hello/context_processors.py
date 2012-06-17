@@ -1,4 +1,5 @@
-from django.conf import settings as django_settings
+from django.conf import settings
 
-def settings(request):
-    return {'settings': django_settings}
+
+def add_settings(request):
+    return {'settings': settings}
