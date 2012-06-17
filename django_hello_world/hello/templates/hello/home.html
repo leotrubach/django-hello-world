@@ -1,12 +1,11 @@
 {% extends "base.html" %}
 {% block title %}Info page{% endblock %}
 {% block content %}
-<h1>42 Coffee Cups Test Assignment</h1>
-{% if perms.hello.change_owner %}
-    <a href="{% url edit_owner pk=owner.id %}">Edit</a>
-{% endif %}
 {% if owner %}
     <div class="row">
+        {% if perms.hello.change_owner %}
+            <div class="pull-right"><a class="btn" href="{% url edit_owner pk=owner.id %}">Edit</a></div>
+        {% endif %}
         <div class="span6">
             <dl>
                 <dt>Name</dt><dd>{{ owner.firstname }}</dd>
