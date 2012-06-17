@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import Owner
-
+from .widgets import ClearableImageInput
 
 class OwnerForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -13,3 +13,4 @@ class OwnerForm(forms.ModelForm):
     class Meta:
         model = Owner
         exclude = ('active')
+        widgets = {'photo': ClearableImageInput() }
