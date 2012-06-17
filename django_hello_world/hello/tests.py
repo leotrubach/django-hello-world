@@ -64,6 +64,11 @@ class HttpTest(TestCase):
 
     def test_admintag(self):
         from django_hello_world.hello.templatetags.admintags import edit_link
+        from django.template import Template, Context
         o = Owner.objects.get(active=True)
+        s = '''{% load admintags %}
+            {% edit_link owner %}'''
+        t = Template(s)
+        c = Context({'owner': o})
+        self.assertIn(edit_link(o), t.render(c))
         self.assertEqual(edit_link(o), '/admin/hello/owner/%s/' % o.id)
-
