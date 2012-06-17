@@ -28,7 +28,7 @@ class HttpTest(TestCase):
 
     def test_context_processors(self):
         from django_hello_world.settings import TEMPLATE_CONTEXT_PROCESSORS
-        self.assertIn('django_hello_world.hello.context_processors.add_settings', TEMPLATE_CONTEXT_PROCESSORS)
+        from django.conf import settings
         c = Client()
         response = c.get(reverse('home'))
-        self.assertIn('settings', response.context)
+        self.assertEquals(settings, response.context['settings'])
