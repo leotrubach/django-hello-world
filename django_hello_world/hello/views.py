@@ -15,8 +15,13 @@ def home(request):
         owner = None
     except Owner.MultipleObjectsReturned:
         owner = None
+    return {'owner': owner}
+
+
+@render_to('hello/last_requests.html')
+def last_ten_requests(request):
     last_requests = Request.objects.order_by('-dt_request')[:10]
-    return {'owner': owner, 'last_requests': last_requests}
+    return {'last_requests': last_requests}
 
 class OwnerForm(forms.ModelForm):
     class Meta:

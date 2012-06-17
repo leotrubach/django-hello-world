@@ -2,6 +2,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
 from .models import Owner
+from django_hello_world.settings import MIDDLEWARE_CLASSES
 
 
 class HttpTest(TestCase):
@@ -17,20 +18,20 @@ class HttpTest(TestCase):
         self.assertContains(response, 'Skype')
         self.assertContains(response, 'Other contacts')
 
-    def test_reqmid(self):
-        from django_hello_world.settings import MIDDLEWARE_CLASSES
-        self.assertIn('django_hello_world.hello.middleware.StoreRequestMiddleware', MIDDLEWARE_CLASSES)
+    def test_request_middleware(self):
+        self.assertIn(
+            'django_hello_world.hello.middleware.StoreRequestMiddleware',
+            MIDDLEWARE_CLASSES)
         c = Client()
-        response = c.get(reverse('home'))
+        response = c.get(reverse('last_requests'))
         self.assertContains(response, 'Requests')
         self.assertIn('last_requests', response.context)
 
     def test_context_processors(self):
-        from django_hello_world.settings import TEMPLATE_CONTEXT_PROCESSORS
-        self.assertIn('django_hello_world.hello.context_processors.settings', TEMPLATE_CONTEXT_PROCESSORS)
+        from django.conf import settings
         c = Client()
         response = c.get(reverse('home'))
-        self.assertIn('settings', response.context)
+        self.assertEquals(settings, response.context['settings'])
 
     def test_owner_photo(self):
         self.assertIn('photo', [f.name for f in Owner._meta.fields])
