@@ -7,6 +7,7 @@ from .models import Owner
 from django_hello_world.settings import MIDDLEWARE_CLASSES
 from django.forms.models import model_to_dict
 
+
 class HttpTest(TestCase):
     def test_home(self):
         c = Client()

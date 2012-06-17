@@ -3,6 +3,7 @@ from django.forms import FileInput, CheckboxInput
 from django.utils.html import escape, conditional_escape
 from django.utils.encoding import force_unicode
 
+
 class ClearableImageInput(FileInput):
     input_text = 'Change'
     clear_checkbox_label = 'Clear'

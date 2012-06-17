@@ -5,6 +5,7 @@ from django.views.generic import UpdateView
 from .models import Owner, Request
 from .forms import OwnerForm
 
+
 @render_to('hello/home.html')
 def home(request):
     try:
