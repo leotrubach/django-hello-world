@@ -27,15 +27,15 @@ class Owner(models.Model):
 class Request(models.Model):
     method = models.CharField(max_length=10, verbose_name='method')
     path = models.TextField(verbose_name='path')
-    dt_request = models.DateTimeField(
+    logged_date = models.DateTimeField(
         auto_now_add=True,
         verbose_name='request time')
 
     def __unicode__(self):
-        format_pars = {'dt_request': self.dt_request,
+        format_pars = {'logged_date': self.logged_date,
                        'path': self.path,
                        'method': self.method}
-        return '%(dt_request)s %(method)s %(path)s' % format_pars
+        return '%(logged_date)s %(method)s %(path)s' % format_pars
 
     class Meta:
         verbose_name = 'request'
