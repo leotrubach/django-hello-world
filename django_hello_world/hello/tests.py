@@ -27,7 +27,6 @@ class HttpTest(TestCase):
         self.assertIn('last_requests', response.context)
 
     def test_context_processors(self):
-        from django_hello_world.settings import TEMPLATE_CONTEXT_PROCESSORS
         from django.conf import settings
         c = Client()
         response = c.get(reverse('home'))
