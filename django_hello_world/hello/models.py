@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Owner(models.Model):
     firstname = models.CharField(max_length=25, verbose_name='first name')
     lastname = models.CharField(max_length=25, verbose_name='last name')
@@ -18,6 +19,7 @@ class Owner(models.Model):
     class Meta:
         verbose_name = 'owner'
         verbose_name_plural = 'owners'
+
 
 class Request(models.Model):
     method = models.CharField(max_length=10, verbose_name='method')

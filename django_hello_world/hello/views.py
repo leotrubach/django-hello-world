@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 from .models import Owner, Request
 
+
 @render_to('hello/home.html')
 def home(request):
     try:
