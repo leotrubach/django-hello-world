@@ -19,7 +19,7 @@ def home(request):
 
 @render_to('hello/last_requests.html')
 def last_ten_requests(request):
-    last_requests = Request.objects.order_by('-dt_request')[:10]
+    last_requests = Request.objects.order_by('-logged_date')[:10]
     return {'last_requests': last_requests}
 
 
