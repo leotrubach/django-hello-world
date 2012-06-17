@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 
 register = template.Library()
 
+
 @register.simple_tag
 def edit_link(obj):
     if isinstance(obj, Model):

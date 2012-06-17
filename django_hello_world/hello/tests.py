@@ -80,3 +80,36 @@ class HttpTest(TestCase):
         c = Context({'owner': o})
         self.assertIn(edit_link(o), t.render(c))
         self.assertEqual(edit_link(o), '/admin/hello/owner/%s/' % o.id)
+
+    def test_command(self):
+        from django.core.management import call_command
+        from StringIO import StringIO
+
+        def parse_line(s):
+            model_name, count = (c.strip() for c in s.split(':'))
+            return model_name, int(count)
+
+        def run_and_parse_output():
+            command_output = StringIO()
+            error_output = StringIO()
+            call_command(
+                'modelcount',
+                stdout=command_output,
+                stderr=error_output)
+            command_output.seek(0)
+            error_output.seek(0)
+            std_list = command_output.readlines()
+            err_list = error_output.readlines()
+
+            self.assertEqual(len(std_list), len(err_list))
+            for i in range(len(std_list)):
+                self.assertEqual('error: ' + std_list[i], err_list[i])
+            return dict([parse_line(s) for s in std_list])
+
+        c = Client()
+        count_before = run_and_parse_output()
+        c.get(reverse('home'))
+        count_after = run_and_parse_output()
+        self.assertEqual(
+            count_before['hello.Request'] + 1,
+            count_after['hello.Request'])
