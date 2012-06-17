@@ -2,29 +2,53 @@
 {% block title %}Info page{% endblock %}
 {% block content %}
 <h1>42 Coffee Cups Test Assignment</h1>
-<form enctype="multipart/form-data" method="post">
+<form class="form-horizontal" enctype="multipart/form-data" method="post">
+    <fieldset>
     {% csrf_token %}
     <div class="row">
         <div class="span6">
-            <dl>
-                <dt>Name</dt><dd>{{ form.firstname }}</dd>
-                <dt>Last name</dt><dd>{{ form.lastname }}</dd>
-                <dt>Date of birth</dt><dd>{{ form.birthday }}</dd>
-                <dt>Photo </dt><dd>{{ form.photo }}</dd>
-            </dl>
+            <div class="control-group">
+                <label class="control-label">{{ form.firstname.label }}:</label>
+                <div class="controls">{{ form.firstname }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{{ form.lastname.label }}:</label>
+                <div class="controls">{{ form.lastname }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{{ form.birthday.label }}:</label>
+                <div class="controls">{{ form.birthday }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{{ form.photo.label }}:</label>
+                <div class="controls">{{ form.photo }}</div>
+            </div>
         </div>
         <div class="span6">
-            <dl>
-                <dt>Email</dt><dd>{{ form.email }}</dd>
-                <dt>Jabber</dt><dd>{{ form.jabber }}</dd>
-                <dt>Skype</dt><dd>{{ form.skype }}</dd>
-                <dt>Other contacts:</dt><dd>{{ form.other }}</dd>
-                <dt>Bio</dt><dd>{{ form.bio }}</dd>
-
-            </dl>
+            <div class="control-group">
+                <label class="control-label">{{ form.email.label }}:</label>
+                <div class="controls">{{ form.email }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{{ form.jabber.label }}:</label>
+                <div class="controls">{{ form.jabber }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{{ form.skype.label }}:</label>
+                <div class="controls">{{ form.skype }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{{ form.other.label }}:</label>
+                <div class="controls">{{ form.other }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{{ form.bio.label }}:</label>
+                <div class="controls">{{ form.bio }}</div>
+            </div>
         </div>
     </div>
 
     <input type="submit" value="Save"/>
+    </fieldset>
 </form>
 {% endblock content %}
