@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.db.models import get_models
 
+
 class Command(BaseCommand):
     help = 'Displays count of models in database'
 

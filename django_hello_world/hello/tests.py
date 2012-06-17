@@ -92,7 +92,10 @@ class HttpTest(TestCase):
         def run_and_parse_output():
             command_output = StringIO()
             error_output = StringIO()
-            call_command('modelcount', stdout=command_output, stderr=error_output)
+            call_command(
+                'modelcount',
+                stdout=command_output,
+                stderr=error_output)
             command_output.seek(0)
             error_output.seek(0)
             std_list = command_output.readlines()
