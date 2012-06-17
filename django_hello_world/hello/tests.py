@@ -17,9 +17,9 @@ class HttpTest(TestCase):
         self.assertContains(response, 'Skype')
         self.assertContains(response, 'Other contacts')
 
-    def test_reqmid(self):
+    def test_request_middleware(self):
         self.assertIn('django_hello_world.hello.middleware.StoreRequestMiddleware', MIDDLEWARE_CLASSES)
         c = Client()
-        response = c.get(reverse('home'))
+        response = c.get(reverse('last_requests'))
         self.assertContains(response, 'Requests')
         self.assertIn('last_requests', response.context)

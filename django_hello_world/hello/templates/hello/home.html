@@ -23,27 +23,5 @@
         </div>
     </div>
 {% endif %}
-<h2>Requests</h2>
-{% if last_requests %}
-        <table>
-            <thead>
-            <tr>
-                <th>Date/time</th>
-                <th>Method</th>
-                <th>Path</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for r in last_requests %}
-            <tr>
-                <td>{{ r.dt_request }}</td>
-                <td>{{ r.method }}</td>
-                <td>{{ r.path }}</td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-{% else %}
-        <p>No requests</p>
-{% endif %}
+<a href="{% url last_requests %}">Requests</a>
 {% endblock content %}
