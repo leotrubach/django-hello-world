@@ -44,6 +44,7 @@ class Request(models.Model):
         verbose_name = 'request'
         verbose_name_plural = 'requests'
 
+
 class Activity(models.Model):
     operation = models.CharField(
         choices=(('create', 'create'),
@@ -87,7 +88,6 @@ def on_save(sender, instance=None, created=False, raw=True, **kwargs):
         object_pk=str(instance.pk)
     ).save()
 
-request_finished.connect(on_save, )
 
 @receiver(post_delete, dispatch_uid="42-test-leo-delete")
 def on_delete(sender, instance=None, **kwargs):
