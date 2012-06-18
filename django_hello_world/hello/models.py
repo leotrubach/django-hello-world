@@ -40,3 +40,28 @@ class Request(models.Model):
     class Meta:
         verbose_name = 'request'
         verbose_name_plural = 'requests'
+
+class Activity(models.Model):
+    operation = models.CharField(
+        choices=(('create', 'create'),
+                 ('update', 'update'),
+                 ('delete', 'delete')),
+        max_length=10,
+        verbose_name='operation')
+    date_logged = models.DateTimeField(auto_now_add=True)
+    appname = models.CharField(
+        max_length=50,
+        verbose_name='application')
+    modelname = models.CharField(
+        max_length=50,
+        verbose_name='model')
+    object_id = models.PositiveIntegerField(verbose_name='object id')
+
+    def __unicode__(self):
+        fmt = '%(date_logged) %(operation)s %(appname)s.%(modelname)s %(id)s'
+        pars = {'date_logged': self.date_logged,
+                'operation': self.operation,
+                'appname': self.appname,
+                'modelname': self.modelname,
+                'id': self.object_id}
+        return fmt % pars
