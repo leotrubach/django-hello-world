@@ -18,3 +18,11 @@ class OwnerForm(forms.ModelForm):
 
     class Media:
         js = ('js/jquery.form.js', 'js/ajaxify_owner_form.js')
+
+
+class PriorityForm(forms.Form):
+    priority = forms.TypedChoiceField(
+        choices=((0, 'ascending'), (1, 'descending')),
+        coerce=int,
+        label='priority',
+        required=False)
