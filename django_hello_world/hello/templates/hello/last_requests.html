@@ -25,6 +25,21 @@
             {% endfor %}
             </tbody>
         </table>
+
+{% if is_paginated %}
+        <ul class="pager">
+            {% if page_obj.has_previous %}
+            <li class="previous">
+            <a href="?page={{ page_obj.previous_page_number }}&priority={{ priority }}">&larr; Back</a>
+            </li>
+            {% endif %}
+            {% if page_obj.has_next %}
+            <li class="next">
+            <a href="?page={{ page_obj.next_page_number }}&priority={{ priority }}">Next &rarr;</a>
+            </li>
+            {% endif %}
+        </ul>
+    {% endif %}
 {% else %}
         <p>No requests</p>
 {% endif %}
