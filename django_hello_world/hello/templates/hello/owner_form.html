@@ -6,45 +6,158 @@
     <fieldset>
     {% csrf_token %}
     <div class="row">
+        {% if form.non_field_errors %}
+                <div class="alert alert-error">
+                    <strong>Error!</strong>
+                    {% for e in form.non_field_errors %}
+                     <p>{{ e|escape }}</p>
+                    {% endfor %}
+                </div>
+        {% endif %}
         <div class="span6">
+            {% if form.firstname.errors %}
+            <div class="control-group error">
+                <label class="control-label">{{ form.firstname.label }}:</label>
+                <div class="controls">{{ form.firstname }}
+                    {% for e in form.firstname.errors %}
+                    <p class="help-block">{{ e|escape }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
             <div class="control-group">
                 <label class="control-label">{{ form.firstname.label }}:</label>
                 <div class="controls">{{ form.firstname }}</div>
             </div>
+            {% endif %}
+            
+            
+            {% if form.lastname.errors %}
+            <div class="control-group error">
+                <label class="control-label">{{ form.lastname.label }}:</label>
+                <div class="controls">{{ form.lastname }}
+                    {% for e in form.lastname.errors %}
+                    <p class="help-block">{{ e|escape }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
             <div class="control-group">
                 <label class="control-label">{{ form.lastname.label }}:</label>
                 <div class="controls">{{ form.lastname }}</div>
             </div>
+            {% endif %}
+            
+            {% if form.birthday.errors %}
+            <div class="control-group error">
+                <label class="control-label">{{ form.birthday.label }}:</label>
+                <div class="controls">{{ form.birthday }}
+                    {% for e in form.birthday.errors %}
+                    <p class="help-block">{{ e|escape }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
             <div class="control-group">
                 <label class="control-label">{{ form.birthday.label }}:</label>
                 <div class="controls">{{ form.birthday }}</div>
             </div>
+            {% endif %}
+            
+            {% if form.photo.errors %}
+            <div class="control-group error">
+                <label>{{ form.photo.label }}:</label>
+                {{ form.photo }}
+                {% for e in form.photo.errors %}
+                    <p class="help-block">{{ e|escape }}</p>
+                {% endfor %}
+            </div>
+            {% else %}
             <div class="control-group">
                 <label>{{ form.photo.label }}:</label>
                 {{ form.photo }}
             </div>
+            {% endif %}
+            
         </div>
         <div class="span6">
-            <div class="control-group">
-                <label class="control-label">{{ form.email.label }}:</label>
-                <div class="controls">{{ form.email }}</div>
-            </div>
-            <div class="control-group">
-                <label class="control-label">{{ form.jabber.label }}:</label>
-                <div class="controls">{{ form.jabber }}</div>
-            </div>
-            <div class="control-group">
-                <label class="control-label">{{ form.skype.label }}:</label>
-                <div class="controls">{{ form.skype }}</div>
-            </div>
-            <div class="control-group">
-                <label>{{ form.other.label }}:</label>
-                {{ form.other }}
-            </div>
-            <div class="control-group">
-                <label>{{ form.bio.label }}:</label>
-                {{ form.bio }}
-            </div>
+            {% if form.email.errors %}
+                <div class="control-group error">
+                    <label class="control-label">{{ form.email.label }}:</label>
+                    <div class="controls">{{ form.email }}
+                        {% for e in form.email.errors %}
+                        <p class="help-block">{{ e|escape }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="control-group">
+                    <label class="control-label">{{ form.email.label }}:</label>
+                    <div class="controls">{{ form.email }}</div>
+                </div>
+            {% endif %}
+            
+            {% if form.jabber.errors %}
+                <div class="control-group error">
+                    <label class="control-label">{{ form.jabber.label }}:</label>
+                    <div class="controls">{{ form.jabber }}
+                        {% for e in form.jabber.errors %}
+                        <p class="help-block">{{ e|escape }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="control-group">
+                    <label class="control-label">{{ form.jabber.label }}:</label>
+                    <div class="controls">{{ form.jabber }}</div>
+                </div>
+            {% endif %}
+            
+            {% if form.skype.errors %}
+                <div class="control-group error">
+                    <label class="control-label">{{ form.skype.label }}:</label>
+                    <div class="controls">{{ form.skype }}
+                        {% for e in form.skype.errors %}
+                        <p class="help-block">{{ e|escape }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="control-group">
+                    <label class="control-label">{{ form.skype.label }}:</label>
+                    <div class="controls">{{ form.skype }}</div>
+                </div>
+            {% endif %}
+
+            {% if form.bio.errors %}
+                <div class="control-group error">
+                    <label>{{ form.bio.label }}:</label>
+                    {{ form.bio }}
+                    {% for e in form.bio.errors %}
+                        <p class="help-block">{{ e|escape }}</p>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="control-group">
+                    <label>{{ form.bio.label }}:</label>
+                    {{ form.bio }}
+                </div>
+            {% endif %}
+            
+            {% if form.other.errors %}
+                <div class="control-group error">
+                    <label>{{ form.other.label }}:</label>
+                    {{ form.other }}
+                    {% for e in form.other.errors %}
+                        <p class="help-block">{{ e|escape }}</p>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="control-group">
+                    <label>{{ form.other.label }}:</label>
+                    {{ form.other }}
+                </div>
+            {% endif %}
         </div>
     </div>
     <div class="form-actions">
