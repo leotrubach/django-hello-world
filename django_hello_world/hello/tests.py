@@ -113,3 +113,21 @@ class HttpTest(TestCase):
         self.assertEqual(
             count_before['hello.Request'] + 1,
             count_after['hello.Request'])
+
+        def test_signal(self):
+            from .models import Activity
+            c = Client()
+            c.get(reverse('home'))
+            request = Request.objects.order_by('-logged_date')[0]
+            request_id = request.id
+            activity = Activity.objects.order_by('-logged_date')[0]
+            self.assertEqual(activity.object_id, request_id)
+            self.assertEqual(activity.operation, 'create')
+            request.method = 'POST'
+            request.save()
+            activity = Activity.objects.order_by('-logged_date')[0]
+            self.assertEqual(activity.object_id, request_id)
+            self.assertEqual(activity.operation, 'update')
+            request.delete()
+            self.assertEqual(activity.object_id, request_id)
+            self.assertEqual(activity.operation, 'delete')
