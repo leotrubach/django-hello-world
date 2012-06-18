@@ -137,10 +137,10 @@ class HttpTest(TestCase):
         c = Client()
         for i in range(25):
             c.get(reverse('home'), {'priority': 0})
-        response = c.get(reverse('last_requests'), {'priority': 0})
         last_request = Request.objects.order_by('-logged_date')[0]
-        self.assertIn(last_request, response.context['last_requests'])
         response = c.get(reverse('last_requests'), {'priority': 1})
+        self.assertIn(last_request, response.context['last_requests'])
         first_request = Request.objects.order_by('logged_date')[0]
+        response = c.get(reverse('last_requests'), {'priority': 0})
         self.assertIn(first_request, response.context['last_requests'])
 
