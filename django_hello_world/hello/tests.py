@@ -121,14 +121,14 @@ class HttpTest(TestCase):
         request = Request.objects.order_by('-logged_date')[0]
         request_id = request.id
         activity = Activity.objects.order_by('-date_logged')[0]
-        self.assertEqual(activity.object_id, request_id)
+        self.assertEqual(activity.object_pk, str(request_id))
         self.assertEqual(activity.operation, 'create')
         request.method = 'POST'
         request.save()
         activity = Activity.objects.order_by('-date_logged')[0]
-        self.assertEqual(activity.object_id, request_id)
+        self.assertEqual(activity.object_pk, str(request_id))
         self.assertEqual(activity.operation, 'update')
         request.delete()
         activity = Activity.objects.order_by('-date_logged')[0]
-        self.assertEqual(activity.object_id, request_id)
+        self.assertEqual(activity.object_pk, str(request_id))
         self.assertEqual(activity.operation, 'delete')

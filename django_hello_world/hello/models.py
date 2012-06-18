@@ -58,7 +58,7 @@ class Activity(models.Model):
     modelname = models.CharField(
         max_length=50,
         verbose_name='model')
-    object_id = models.PositiveIntegerField(verbose_name='object id')
+    object_pk = models.CharField(max_length=100, verbose_name='object_pk')
 
     def __unicode__(self):
         fmt = '%(date_logged) %(operation)s %(appname)s.%(modelname)s %(id)s'
@@ -66,7 +66,7 @@ class Activity(models.Model):
                 'operation': self.operation,
                 'appname': self.appname,
                 'modelname': self.modelname,
-                'id': self.object_id}
+                'id': self.object_pk}
         return fmt % pars
 
 
@@ -84,7 +84,7 @@ def on_save(sender, instance=None, created=False, raw=True, **kwargs):
         operation=operation,
         appname=sender._meta.app_label,
         modelname=sender.__name__,
-        object_id=instance.pk
+        object_pk=str(instance.pk)
     ).save()
 
 request_finished.connect(on_save, )
@@ -97,5 +97,5 @@ def on_delete(sender, instance=None, **kwargs):
         operation='delete',
         appname=sender._meta.app_label,
         modelname=sender.__name__,
-        object_id=instance.pk
+        object_pk=str(instance.pk)
     ).save()
