@@ -143,4 +143,3 @@ class HttpTest(TestCase):
         first_request = Request.objects.order_by('logged_date')[0]
         response = c.get(reverse('last_requests'), {'priority': 0})
         self.assertIn(first_request, response.context['last_requests'])
-
