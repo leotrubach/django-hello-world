@@ -114,21 +114,21 @@ class HttpTest(TestCase):
             count_before['hello.Request'] + 1,
             count_after['hello.Request'])
 
-#    def test_signal(self):
-#        from .models import Activity
-#        c = Client()
-#        c.get(reverse('home'))
-#        request = Request.objects.order_by('-logged_date')[0]
-#        request_id = request.id
-#        activity = Activity.objects.order_by('-date_logged')[0]
-#        self.assertEqual(activity.object_pk, str(request_id))
-#        self.assertEqual(activity.operation, 'create')
-#        request.method = 'POST'
-#        request.save()
-#        activity = Activity.objects.order_by('-date_logged')[0]
-#        self.assertEqual(activity.object_pk, str(request_id))
-#        self.assertEqual(activity.operation, 'update')
-#        request.delete()
-#        activity = Activity.objects.order_by('-date_logged')[0]
-#        self.assertEqual(activity.object_pk, str(request_id))
-#        self.assertEqual(activity.operation, 'delete')
+    def test_signal(self):
+        from .models import Activity
+        c = Client()
+        c.get(reverse('home'))
+        request = Request.objects.order_by('-logged_date')[0]
+        request_id = request.id
+        activity = Activity.objects.order_by('-date_logged')[0]
+        self.assertEqual(activity.object_pk, str(request_id))
+        self.assertEqual(activity.operation, 'create')
+        request.method = 'POST'
+        request.save()
+        activity = Activity.objects.order_by('-date_logged')[0]
+        self.assertEqual(activity.object_pk, str(request_id))
+        self.assertEqual(activity.operation, 'update')
+        request.delete()
+        activity = Activity.objects.order_by('-date_logged')[0]
+        self.assertEqual(activity.object_pk, str(request_id))
+        self.assertEqual(activity.operation, 'delete')
