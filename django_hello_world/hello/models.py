@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import post_save, post_delete
 from django.dispatch.dispatcher import receiver
 from django.core.signals import request_finished
+from django.contrib.contenttypes.models import ContentType
 
 
 class Owner(models.Model):
@@ -47,9 +48,9 @@ class Request(models.Model):
 
 class Activity(models.Model):
     operation = models.CharField(
-        choices=(('create', 'create'),
-                 ('update', 'update'),
-                 ('delete', 'delete')),
+        choices=(('C', 'create'),
+                 ('U', 'update'),
+                 ('D', 'delete')),
         max_length=10,
         verbose_name='operation')
     date_logged = models.DateTimeField(auto_now_add=True)
@@ -73,18 +74,20 @@ class Activity(models.Model):
 
 @receiver(post_save, dispatch_uid="42-test-leo-save")
 def on_save(sender, instance=None, created=False, raw=True, **kwargs):
-    if sender.__name__ == 'Activity':
+    model_type = ContentType.objects.get_for_model(sender)
+    if '%s.%s' % (model_type.app_label,
+                  model_type.model) == 'hello.activity':
         return
     if raw:
         return
     if created:
-        operation = 'create'
+        operation = 'C'
     else:
-        operation = 'update'
+        operation = 'U'
     Activity(
         operation=operation,
-        appname=sender._meta.app_label,
-        modelname=sender.__name__,
+        appname=model_type.app_label,
+        modelname=model_type.model,
         object_pk=str(instance.pk)
     ).save()
 
@@ -93,9 +96,13 @@ def on_save(sender, instance=None, created=False, raw=True, **kwargs):
 def on_delete(sender, instance=None, **kwargs):
     if not instance:
         return
+    model_type = ContentType.objects.get_for_model(sender)
+    if '%s.%s' % (model_type.app_label,
+                  model_type.model) == 'hello.activity':
+        return
     Activity(
-        operation='delete',
-        appname=sender._meta.app_label,
-        modelname=sender.__name__,
+        operation='D',
+        appname=model_type.app_label,
+        modelname=model_type.model,
         object_pk=str(instance.pk)
     ).save()
