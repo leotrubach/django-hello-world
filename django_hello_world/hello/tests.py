@@ -111,8 +111,8 @@ class HttpTest(TestCase):
         c.get(reverse('home'))
         count_after = run_and_parse_output()
         self.assertEqual(
-            count_before['hello.Request'] + 1,
-            count_after['hello.Request'])
+            count_before['hello.request'] + 1,
+            count_after['hello.request'])
 
     def test_signal(self):
         from .models import Activity

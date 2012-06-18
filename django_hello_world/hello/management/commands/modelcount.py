@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.db.models import get_models
+from django.contrib.contenttypes.models import ContentType
 
 
 class Command(BaseCommand):
@@ -7,7 +8,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         for model in get_models():
-            name = '%s.%s' % (model._meta.app_label, model.__name__)
+            model_type = ContentType.objects.get_for_model(model)
+            name = '%s.%s' % (model_type.app_label, model_type.model)
             count = model.objects.count()
             output_str = '%s:%s\n' % (name, count)
             self.stdout.write(output_str)
