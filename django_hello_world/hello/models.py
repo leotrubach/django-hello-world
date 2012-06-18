@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.signals import post_save, post_delete
+from django.db.utils import DatabaseError
 from django.dispatch.dispatcher import receiver
 from django.core.signals import request_finished
 from django.contrib.contenttypes.models import ContentType
@@ -74,32 +75,33 @@ class Activity(models.Model):
 
 @receiver(post_save, dispatch_uid="42-test-leo-save")
 def on_save(sender, instance=None, created=False, raw=True, **kwargs):
-    model_type = ContentType.objects.get_for_model(sender)
-    if '%s.%s' % (model_type.app_label,
-                  model_type.model) == 'hello.activity':
-        return
     if raw:
         return
+    if issubclass(sender, Activity):
+        return
+    model_type = ContentType.objects.get_for_model(sender)
     if created:
         operation = 'C'
     else:
         operation = 'U'
-    Activity(
-        operation=operation,
-        appname=model_type.app_label,
-        modelname=model_type.model,
-        object_pk=str(instance.pk)
-    ).save()
+    try:
+        Activity(
+            operation=operation,
+            appname=model_type.app_label,
+            modelname=model_type.model,
+            object_pk=str(instance.pk)
+        ).save()
+    except DatabaseError:
+        pass
 
 
 @receiver(post_delete, dispatch_uid="42-test-leo-delete")
 def on_delete(sender, instance=None, **kwargs):
     if not instance:
         return
-    model_type = ContentType.objects.get_for_model(sender)
-    if '%s.%s' % (model_type.app_label,
-                  model_type.model) == 'hello.activity':
+    if isinstance(sender, Activity):
         return
+    model_type = ContentType.objects.get_for_model(sender)
     Activity(
         operation='D',
         appname=model_type.app_label,
