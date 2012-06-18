@@ -1,6 +1,6 @@
 from .utils import get_project_path
 
-
+SOUTH_TESTS_MIGRATE = False
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 

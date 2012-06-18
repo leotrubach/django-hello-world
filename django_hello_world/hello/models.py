@@ -1,4 +1,7 @@
 from django.db import models
+from django.db.models.signals import post_save, post_delete
+from django.dispatch.dispatcher import receiver
+from django.core.signals import request_finished
 
 
 class Owner(models.Model):
@@ -65,3 +68,34 @@ class Activity(models.Model):
                 'modelname': self.modelname,
                 'id': self.object_id}
         return fmt % pars
+
+
+@receiver(post_save, dispatch_uid="42-test-leo-save")
+def on_save(sender, instance=None, created=False, raw=True, **kwargs):
+    if sender.__name__ == 'Activity':
+        return
+    if raw:
+        return
+    if created:
+        operation = 'create'
+    else:
+        operation = 'update'
+    Activity(
+        operation=operation,
+        appname=sender._meta.app_label,
+        modelname=sender.__name__,
+        object_id=instance.pk
+    ).save()
+
+request_finished.connect(on_save, )
+
+@receiver(post_delete, dispatch_uid="42-test-leo-delete")
+def on_delete(sender, instance=None, **kwargs):
+    if not instance:
+        return
+    Activity(
+        operation='delete',
+        appname=sender._meta.app_label,
+        modelname=sender.__name__,
+        object_id=instance.pk
+    ).save()
