@@ -2,7 +2,7 @@
 {% block title %}Info page{% endblock %}
 {% block form_media %}{{ form.media }}{% endblock %}
 {% block content %}
-<form class="form-horizontal" enctype="multipart/form-data" method="post">
+<form class="form-horizontal" enctype="multipart/form-data" method="post" id="ownerform">
     <fieldset>
     {% csrf_token %}
     <div class="row">
