@@ -71,7 +71,7 @@ class Activity(models.Model):
         return fmt % pars
 
 
-@receiver(post_save, dispatch_uid="42-test-leo-save")
+#@receiver(post_save, dispatch_uid="42-test-leo-save")
 def on_save(sender, instance=None, created=False, raw=True, **kwargs):
     if sender.__name__ == 'Activity':
         return
@@ -89,7 +89,7 @@ def on_save(sender, instance=None, created=False, raw=True, **kwargs):
     ).save()
 
 
-@receiver(post_delete, dispatch_uid="42-test-leo-delete")
+#@receiver(post_delete, dispatch_uid="42-test-leo-delete")
 def on_delete(sender, instance=None, **kwargs):
     if not instance:
         return
