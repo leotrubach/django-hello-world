@@ -2,12 +2,8 @@
 {% block content %}
 <h2>Requests</h2>
 <a href="{% url home %}">Home</a>
-<form action="" method="get">
-    {{ form.priority.label }}: {{ form.priority }}
-    <input type=submit value="submit" />
-</form>
 {% if last_requests %}
-        <table class="table">
+        <table>
             <thead>
             <tr>
                 <th>Date/time</th>
@@ -25,21 +21,6 @@
             {% endfor %}
             </tbody>
         </table>
-
-{% if is_paginated %}
-        <ul class="pager">
-            {% if page_obj.has_previous %}
-            <li class="previous">
-            <a href="?page={{ page_obj.previous_page_number }}&priority={{ priority }}">&larr; Back</a>
-            </li>
-            {% endif %}
-            {% if page_obj.has_next %}
-            <li class="next">
-            <a href="?page={{ page_obj.next_page_number }}&priority={{ priority }}">Next &rarr;</a>
-            </li>
-            {% endif %}
-        </ul>
-    {% endif %}
 {% else %}
         <p>No requests</p>
 {% endif %}
