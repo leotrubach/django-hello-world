@@ -1,17 +1,10 @@
 import json
 
 from annoying.decorators import render_to
-from django.contrib.auth.models import User
-<<<<<<< HEAD
-from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseRedirect
-from django.views.generic import UpdateView, ListView
-=======
 from django.http import HttpResponse
+from django.views.generic import UpdateView, ListView
 from django.template import RequestContext
 from django.template.loader import render_to_string
-from django.views.generic import UpdateView
->>>>>>> t6_calendar
 
 from .models import Owner, Request
 from .forms import OwnerForm, RequestForm
@@ -48,10 +41,12 @@ class RequestList(ListView):
             # default ordering is descending
             order = self.request.GET.get('order', 'desc')
             if order == 'desc':
-                queryset = Request.objects.order_by('-priority', '-logged_date')
+                queryset = Request.objects.order_by(
+                    '-priority', '-logged_date')
                 self.order = 'desc'
             else:
-                queryset = Request.objects.order_by('priority', '-logged_date')
+                queryset = Request.objects.order_by(
+                    'priority', '-logged_date')
                 self.order = 'asc'
             return queryset
 
