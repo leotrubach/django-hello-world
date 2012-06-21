@@ -1,0 +1,52 @@
+<form class="form-horizontal" enctype="multipart/form-data" method="post" id="ownerform">
+    <fieldset>
+    {% csrf_token %}
+    <div class="row">
+        <div class="span6">
+            <div class="control-group">
+                <label class="control-label">{{ form.firstname.label }}:</label>
+                <div class="controls">{{ form.firstname }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{{ form.lastname.label }}:</label>
+                <div class="controls">{{ form.lastname }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{{ form.birthday.label }}:</label>
+                <div class="controls">{{ form.birthday }}</div>
+            </div>
+            <div class="control-group">
+                <label>{{ form.photo.label }}:</label>
+                {{ form.photo }}
+            </div>
+        </div>
+        <div class="span6">
+            <div class="control-group">
+                <label class="control-label">{{ form.email.label }}:</label>
+                <div class="controls">{{ form.email }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{{ form.jabber.label }}:</label>
+                <div class="controls">{{ form.jabber }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{{ form.skype.label }}:</label>
+                <div class="controls">{{ form.skype }}</div>
+            </div>
+            <div class="control-group">
+                <label>{{ form.other.label }}:</label>
+                {{ form.other }}
+            </div>
+            <div class="control-group">
+                <label>{{ form.bio.label }}:</label>
+                {{ form.bio }}
+            </div>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <input type="submit" class="btn btn-primary" value="Save"/>
+        <a href="{% url home %}" class="btn">Cancel</a>
+    </div>
+    </fieldset>
+</form>
