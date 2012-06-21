@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-from django_hello_world.hello.views import EditOwner
+from django_hello_world.hello.views import EditOwner, UpdateRequest
 
 from django.contrib import admin
 admin.autodiscover()
@@ -18,6 +18,9 @@ urlpatterns = patterns(
     url(r'^login/$', 'django.contrib.auth.views.login', name='login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', name='logout'),
     url(r'^edit_owner/(?P<pk>\d+)$', EditOwner.as_view(), name='edit_owner'),
+    url(r'^update_request/(?P<pk>\d+)$',
+        UpdateRequest.as_view(),
+        name='update_request'),
 )
 
 if settings.DEBUG:

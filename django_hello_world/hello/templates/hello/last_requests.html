@@ -1,14 +1,20 @@
 {% extends "base.html" %}
+{% block title %}Requests{% endblock %}
+{% block form_media %}
+<script src="{{ STATIC_URL }}js/ajaxify_request_form.js" type="text/javascript"></script>
+<script src="{{ STATIC_URL }}js/jquery.form.js" type="text/javascript"></script>
+{% endblock %}
 {% block content %}
 <h2>Requests</h2>
 <a href="{% url home %}">Home</a>
 {% if last_requests %}
-        <table>
+        <table class="table">
             <thead>
             <tr>
                 <th>Date/time</th>
                 <th>Method</th>
                 <th>Path</th>
+                <th>Priority</th>
             </tr>
             </thead>
             <tbody>
@@ -17,6 +23,11 @@
                 <td>{{ r.logged_date }}</td>
                 <td>{{ r.method }}</td>
                 <td>{{ r.path }}</td>
+                <td><form method="post" action="{% url update_request r.pk %}" class="requestform form-inline">
+                    {% csrf_token %}
+                    <input name="priority" type="text" value="{{ r.priority }}" class="input-small" />
+                    <input type="submit" value="Set" />
+                </form></td>
             </tr>
             {% endfor %}
             </tbody>
