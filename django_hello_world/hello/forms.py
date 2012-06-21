@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Owner
+from .models import Owner, Request
 from .widgets import ClearableImageInput, CalendarWidget
 
 
@@ -20,9 +20,10 @@ class OwnerForm(forms.ModelForm):
         js = ('js/jquery.form.js', 'js/ajaxify_owner_form.js')
 
 
-class PriorityForm(forms.Form):
-    priority = forms.TypedChoiceField(
-        choices=((0, 'ascending'), (1, 'descending')),
-        coerce=int,
-        label='priority',
-        required=False)
+class RequestForm(forms.ModelForm):
+    class Meta:
+        model = Request
+        fields = ('priority',)
+
+    class Media:
+        js = ('js/ajaxify_request_form.js',)

@@ -26,16 +26,16 @@ class HttpTest(TestCase):
             'django_hello_world.hello.middleware.StoreRequestMiddleware',
             MIDDLEWARE_CLASSES)
         c = Client()
-        response = c.get(reverse('last_requests'))
+        response = c.get(reverse('requests'))
         self.assertContains(response, 'Requests')
-        self.assertIn('last_requests', response.context)
+        self.assertIn('requests', response.context)
         c.get(reverse('home'))
         request = Request.objects.order_by('-logged_date')[0]
         self.assertEqual(request.path, reverse('home'))
         self.assertEqual(request.method, 'GET')
-        c.post(reverse('last_requests'))
+        c.post(reverse('requests'))
         request = Request.objects.order_by('-logged_date')[0]
-        self.assertEqual(request.path, reverse('last_requests'))
+        self.assertEqual(request.path, reverse('requests'))
         self.assertEqual(request.method, 'POST')
 
     def test_context_processors(self):
@@ -134,12 +134,8 @@ class HttpTest(TestCase):
         self.assertEqual(activity.operation, 'D')
 
     def test_priority(self):
-        c = Client()
-        for i in range(25):
-            c.get(reverse('home'), {'priority': 0})
-        last_request = Request.objects.order_by('-logged_date')[0]
-        response = c.get(reverse('last_requests'), {'priority': 1})
-        self.assertIn(last_request, response.context['last_requests'])
-        first_request = Request.objects.order_by('logged_date')[0]
-        response = c.get(reverse('last_requests'), {'priority': 0})
-        self.assertIn(first_request, response.context['last_requests'])
+        r = Request()
+        r.method = 'GET'
+        r.path = '/'
+        r.save()
+        self.assertEqual(r.priority, 0)

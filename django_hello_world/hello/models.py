@@ -35,6 +35,7 @@ class Request(models.Model):
     logged_date = models.DateTimeField(
         auto_now_add=True,
         verbose_name='request time')
+    priority = models.IntegerField(default=0, verbose_name='priority')
 
     def __unicode__(self):
         format_pars = {'logged_date': self.logged_date,
