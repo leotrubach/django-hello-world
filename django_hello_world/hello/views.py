@@ -1,8 +1,17 @@
+import json
+
 from annoying.decorators import render_to
 from django.contrib.auth.models import User
+<<<<<<< HEAD
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import UpdateView, ListView
+=======
+from django.http import HttpResponse
+from django.template import RequestContext
+from django.template.loader import render_to_string
+from django.views.generic import UpdateView
+>>>>>>> t6_calendar
 
 from .models import Owner, Request
 from .forms import OwnerForm, RequestForm
@@ -51,6 +60,28 @@ class EditOwner(UpdateView):
     model = Owner
     form_class = OwnerForm
     success_url = '/'
+
+    def form_invalid(self, form):
+        if not self.request.is_ajax():
+            return super(EditOwner, self).form_invalid(form)
+        return HttpResponse(
+            json.dumps({
+                'status': 'error',
+                'form_html': render_to_string(
+                    'hello/owner_form_inner.html',
+                    {'form': form},
+                    RequestContext(self.request, self.get_context_data())
+                )}),
+            content_type='application/javascript; charset=utf8'
+        )
+
+    def form_valid(self, form):
+        if not self.request.is_ajax():
+            return super(EditOwner, self).form_valid(form)
+        return HttpResponse(
+            json.dumps({'status': 'success'}),
+            content_type='application/javascript; charset=utf8'
+        )
 
 
 class UpdateRequest(UpdateView):
