@@ -21,8 +21,8 @@ def home(request):
 
 class RequestList(ListView):
     model = Request
-    template_name = 'hello/last_requests.html'
-    context_object_name = 'last_requests'
+    template_name = 'hello/requests.html'
+    context_object_name = 'requests'
     paginate_by = 20
 
     def __init__(self, **kwargs):

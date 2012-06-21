@@ -6,7 +6,7 @@
 {% endblock %}
 {% block content %}
 <h2>Requests</h2>
-{% if last_requests %}
+{% if requests %}
         {% if is_paginated %}
         <ul class="pager">
             {% if page_obj.has_previous %}
@@ -37,7 +37,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for r in last_requests %}
+            {% for r in requests %}
             <tr>
                 <td>{{ r.logged_date }}</td>
                 <td>{{ r.method }}</td>
