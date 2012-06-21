@@ -1,6 +1,7 @@
 from annoying.decorators import render_to
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import UpdateView
 
 from .models import Owner, Request
@@ -32,4 +33,7 @@ class EditOwner(UpdateView):
 class UpdateRequest(UpdateView):
     model = Request
     form_class = RequestForm
-    success_url = '/'
+
+    def form_valid(self, form):
+        self.object = form.save()
+        return HttpResponse('OK')
