@@ -132,3 +132,10 @@ class HttpTest(TestCase):
         activity = Activity.objects.order_by('-date_logged')[0]
         self.assertEqual(activity.object_pk, str(request_id))
         self.assertEqual(activity.operation, 'D')
+
+    def test_priority(self):
+        r = Request()
+        r.method = 'GET'
+        r.path = '/'
+        r.save()
+        self.assertEqual(r.priority, 0)
