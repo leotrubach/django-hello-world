@@ -2,7 +2,7 @@ from annoying.decorators import render_to
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, ListView
 
 from .models import Owner, Request
 from .forms import OwnerForm, RequestForm
@@ -19,16 +19,28 @@ def home(request):
     return {'owner': owner}
 
 
-@render_to('hello/last_requests.html')
-def last_ten_requests(request):
-    last_requests = Request.objects.order_by('-logged_date')[:10]
-    return {'last_requests': last_requests}
+class RequestList(ListView):
+    model = Request
+    template_name = 'hello/last_requests.html'
+    context_object_name = 'last_requests'
+    paginate_by = 20
+
+    def get_queryset(self):
+        if self.request.method == 'GET':
+            # default ordering is descending
+            order = self.request.GET.get('order', 'desc')
+            if order == 'desc':
+                queryset = Request.objects.order_by('-logged_date')
+            else:
+                queryset = Request.objects.order_by('logged_date')
+            return queryset
 
 
 class EditOwner(UpdateView):
     model = Owner
     form_class = OwnerForm
     success_url = '/'
+
 
 class UpdateRequest(UpdateView):
     model = Request
