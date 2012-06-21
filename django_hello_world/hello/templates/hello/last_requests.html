@@ -11,12 +11,12 @@
         <ul class="pager">
             {% if page_obj.has_previous %}
             <li class="previous">
-            <a href="?page={{ page_obj.previous_page_number }}&priority={{ priority }}">&larr; Back</a>
+            <a href="?page={{ page_obj.previous_page_number }}&order={{ order }}">&larr; Back</a>
             </li>
             {% endif %}
             {% if page_obj.has_next %}
             <li class="next">
-            <a href="?page={{ page_obj.next_page_number }}&priority={{ priority }}">Next &rarr;</a>
+            <a href="?page={{ page_obj.next_page_number }}&order={{ order }}">Next &rarr;</a>
             </li>
             {% endif %}
         </ul>
@@ -27,7 +27,13 @@
                 <th>Date/time</th>
                 <th>Method</th>
                 <th>Path</th>
-                <th>Priority</th>
+                <th>
+                    {% if order == "desc" %}
+                    <a href="?order=asc">Priority &uarr;</a>
+                    {% else %}
+                        <a href="?order=desc">Priority &darr;</a>
+                    {% endif %}
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -49,12 +55,12 @@
         <ul class="pager">
             {% if page_obj.has_previous %}
             <li class="previous">
-            <a href="?page={{ page_obj.previous_page_number }}&priority={{ priority }}">&larr; Back</a>
+            <a href="?page={{ page_obj.previous_page_number }}&order={{ order }}">&larr; Back</a>
             </li>
             {% endif %}
             {% if page_obj.has_next %}
             <li class="next">
-            <a href="?page={{ page_obj.next_page_number }}&priority={{ priority }}">Next &rarr;</a>
+            <a href="?page={{ page_obj.next_page_number }}&order={{ order }}">Next &rarr;</a>
             </li>
             {% endif %}
         </ul>
