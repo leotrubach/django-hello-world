@@ -50,6 +50,7 @@ class EditOwner(UpdateView):
     def form_valid(self, form):
         if not self.request.is_ajax():
             return super(EditOwner, self).form_valid(form)
+        self.object = form.save()
         return HttpResponse(
             json.dumps({'status': 'success'}),
             content_type='application/javascript; charset=utf8'
