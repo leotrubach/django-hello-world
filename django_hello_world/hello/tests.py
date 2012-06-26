@@ -119,18 +119,18 @@ class HttpTest(TestCase):
         c = Client()
         c.get(reverse('home'))
         request = Request.objects.order_by('-logged_date')[0]
-        request_id = request.id
         activity = Activity.objects.order_by('-date_logged')[0]
-        self.assertEqual(activity.object_pk, str(request_id))
+        self.assertEqual(activity.content_object, request)
         self.assertEqual(activity.operation, 'C')
         request.method = 'POST'
         request.save()
         activity = Activity.objects.order_by('-date_logged')[0]
-        self.assertEqual(activity.object_pk, str(request_id))
+        self.assertEqual(activity.content_object, request)
         self.assertEqual(activity.operation, 'U')
+        request_id = request.id
         request.delete()
         activity = Activity.objects.order_by('-date_logged')[0]
-        self.assertEqual(activity.object_pk, str(request_id))
+        self.assertEqual(activity.object_id, str(request_id))
         self.assertEqual(activity.operation, 'D')
 
     def test_priority(self):
