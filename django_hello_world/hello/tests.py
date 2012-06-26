@@ -1,7 +1,8 @@
 import random
+from unittest import skipUnless
 
 from django.core.urlresolvers import reverse
-from django.test import TestCase
+from django.test import TestCase, LiveServerTestCase
 from django.test.client import Client
 from .models import Owner, Request
 from django_hello_world.settings import MIDDLEWARE_CLASSES
@@ -139,3 +140,45 @@ class HttpTest(TestCase):
         r.path = '/'
         r.save()
         self.assertEqual(r.priority, 0)
+
+
+def selenium_available():
+    try:
+        from selenium.webdriver import Chrome
+    except ImportError:
+        return False
+    return True
+
+
+@skipUnless(selenium_available(), "Selenium unavailable")
+class SeleniumTest(LiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        from selenium.webdriver import Chrome
+        cls.selenium = Chrome()
+        super(SeleniumTest, cls).setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        super(SeleniumTest, cls).tearDownClass()
+        cls.selenium.quit()
+
+    def test_login(self):
+	from selenium.webdriver.support.wait import WebDriverWait
+        self.selenium.get('%s%s' % (self.live_server_url, '/login/'))
+        username = self.selenium.find_element_by_name('username')
+        username.send_keys('admin')
+        password = self.selenium.find_element_by_name('password')
+        password.send_keys('admin')
+        self.selenium.find_element_by_xpath(
+            '//input[@value="Log in"]').click()
+        WebDriverWait(self.selenium, 10).until(
+            lambda driver: driver.find_element_by_tag_name('body'))
+        pk = Owner.objects.get(active=True).id
+        
+        self.selenium.get(
+            '%s%s' % (self.live_server_url, 
+                      reverse('edit_owner', kwargs={'pk': pk})))
+        self.selenium.find_element_by_name('birthday').click()
+        dp = self.selenium.find_element_by_id('ui-datepicker-div')
+        self.assert_(dp.is_displayed())
