@@ -9,6 +9,7 @@ function data_sent(data) {
         $('#ownerform').find('input, textarea').removeAttr('disabled');
     } else if (data.status == 'error') {
         $('#owner-form-container').html(data.form_html);
+        activate_calendar();
     }
 }
 
