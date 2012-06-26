@@ -4,6 +4,7 @@ from django.db.utils import DatabaseError
 from django.dispatch.dispatcher import receiver
 from django.core.signals import request_finished
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 
 
 class Owner(models.Model):
@@ -56,21 +57,15 @@ class Activity(models.Model):
         max_length=10,
         verbose_name='operation')
     date_logged = models.DateTimeField(auto_now_add=True)
-    appname = models.CharField(
-        max_length=50,
-        verbose_name='application')
-    modelname = models.CharField(
-        max_length=50,
-        verbose_name='model')
-    object_pk = models.CharField(max_length=100, verbose_name='object_pk')
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.CharField(max_length=50)
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
 
     def __unicode__(self):
-        fmt = '%(date_logged) %(operation)s %(appname)s.%(modelname)s %(id)s'
+        fmt = '%(date_logged) %(operation)s %(object)s'
         pars = {'date_logged': self.date_logged,
                 'operation': self.operation,
-                'appname': self.appname,
-                'modelname': self.modelname,
-                'id': self.object_pk}
+                'object': self.content_object}
         return fmt % pars
 
 
@@ -80,7 +75,6 @@ def on_save(sender, instance=None, created=False, raw=True, **kwargs):
         return
     if issubclass(sender, Activity):
         return
-    model_type = ContentType.objects.get_for_model(sender)
     if created:
         operation = 'C'
     else:
@@ -88,9 +82,7 @@ def on_save(sender, instance=None, created=False, raw=True, **kwargs):
     try:
         Activity(
             operation=operation,
-            appname=model_type.app_label,
-            modelname=model_type.model,
-            object_pk=str(instance.pk)
+            content_object=instance
         ).save()
     except DatabaseError:
         pass
@@ -102,10 +94,7 @@ def on_delete(sender, instance=None, **kwargs):
         return
     if isinstance(sender, Activity):
         return
-    model_type = ContentType.objects.get_for_model(sender)
     Activity(
         operation='D',
-        appname=model_type.app_label,
-        modelname=model_type.model,
-        object_pk=str(instance.pk)
+        content_object=instance
     ).save()
