@@ -2,3 +2,4 @@ Django >= 1.4
 django-annoying >= 0.7.6
 south
 pil
+selenium
