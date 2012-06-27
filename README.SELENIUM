@@ -1,0 +1,8 @@
+In order to enable selenium tests in this project make sure you
+have ChromeDriver executable in your system path.
+
+You can download ChromeDriver from here:
+
+http://code.google.com/p/chromedriver/downloads/list
+
+
