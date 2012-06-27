@@ -1,5 +1,5 @@
 import random
-from unittest import skipUnless
+from unittest import SkipTest
 
 from django.core.urlresolvers import reverse
 from django.test import TestCase, LiveServerTestCase
@@ -142,20 +142,18 @@ class HttpTest(TestCase):
         self.assertEqual(r.priority, 0)
 
 
-def selenium_available():
-    try:
-        from selenium.webdriver import Chrome
-    except ImportError:
-        return False
-    return True
-
-
-@skipUnless(selenium_available(), "Selenium unavailable")
 class SeleniumTest(LiveServerTestCase):
     @classmethod
     def setUpClass(cls):
-        from selenium.webdriver import Chrome
-        cls.selenium = Chrome()
+    	try:
+            from selenium.webdriver import Chrome
+        except ImportError:
+            raise SkipTest
+        from selenium.common.exceptions import WebDriverException
+        try:
+            cls.selenium = Chrome()
+        except WebDriverException:
+            raise SkipTest
         super(SeleniumTest, cls).setUpClass()
 
     @classmethod
